@@ -1,0 +1,97 @@
+---
+import { Picture } from "astro:assets";
+import Channels from "./Channels.astro";
+import team from "../assets/img/team.jpg";
+import { PHONE_DISPLAY, PHONE_TEL } from "../data/clinic";
+---
+<section id="hero" class="hero" aria-labelledby="hero-title">
+  <div class="hero__plane plane">
+    <div class="hero__grid container">
+      <div class="hero__text">
+        <h1 id="hero-title">Імплантація та лікування зубів для дорослих в&nbsp;Ужгороді</h1>
+        <p class="hero__sub">25 років лікуємо ужгородців. Імплантацію проводить хірург-імплантолог Шандор Сабад, у&nbsp;якого 35&nbsp;років практики.</p>
+      </div>
+      <div class="hero__act" data-rec="R-002,GA-R001,M-R002">
+        <a class="hero__phone" href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+        <Channels tone="on-primary" label="Зв’язатися з клінікою" />
+        <p class="hero__note"><strong>Болить зуб?</strong> Запишемо на прийом у той самий день.<br />Пн–Пт 10:00–17:00, прийом за записом.</p>
+      </div>
+    </div>
+  </div>
+
+  <figure class="hero__photo" data-rec="R-008">
+    <Picture
+      src={team}
+      formats={["avif", "webp"]}
+      widths={[480, 800, 1200, 1600, 2000]}
+      sizes="100vw"
+      quality={58}
+      alt="Команда стоматології УжДент: лікарі та асистенти в холі клініки"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </figure>
+
+  <div class="hero__facts-wrap">
+    <ul class="hero__facts container" aria-label="Коротко про клініку" data-rec="R-004,R-010">
+      <li><strong>25 років</strong><span>лікуємо в Ужгороді</span></li>
+      <li><strong>35 років</strong><span>практики хірурга-імплантолога</span></li>
+      <li data-rec="R-010"><strong>4,7 у Google</strong><span>99 відгуків пацієнтів</span></li>
+      <li><strong>2023</strong><span>Стоматологія року в Ужгороді</span></li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero { display: grid; grid-template-areas: "plane" "photo" "facts"; }
+  .hero__plane { grid-area: plane; padding-block: var(--s-4) var(--s-4); }
+  .hero__photo { grid-area: photo; margin: 0; background: var(--color-surface); }
+  .hero__facts-wrap { grid-area: facts; }
+
+  .hero__grid { display: grid; gap: var(--s-3); }
+  .hero h1 { font-size: var(--fs-display); line-height: var(--lh-display); color: var(--color-on-primary); max-width: 18ch; text-wrap: balance; }
+  .hero__sub { margin-top: var(--s-2); font-size: var(--fs-lead); line-height: 1.5; color: var(--color-accent); max-width: 44ch; }
+  .hero__act { display: grid; gap: var(--s-2); align-content: start; }
+  .hero__phone { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); line-height: 1.1; color: var(--color-on-primary); text-decoration: none; justify-self: start; border-radius: var(--radius); transition: color var(--dur-fast) var(--ease-out); }
+  .hero__phone:hover { color: var(--color-accent); }
+  .hero__note { color: var(--color-accent); font-size: .9375rem; line-height: 1.5; }
+  .hero__note strong { color: var(--color-on-primary); }
+
+  .hero__photo :global(picture), .hero__photo :global(img) { display: block; width: 100%; }
+  .hero__photo :global(img) { height: auto; aspect-ratio: 3 / 2; object-fit: cover; object-position: 50% 30%; }
+
+  .hero__facts { list-style: none; margin: 0 auto; padding: var(--s-3) 0 var(--s-1); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3) var(--s-2); }
+  .hero__facts li { display: grid; gap: .125rem; align-content: start; padding-left: var(--s-2); border-left: 2px solid var(--color-primary); }
+  .hero__facts strong { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; line-height: 1.15; color: var(--color-primary); }
+  .hero__facts span { font-size: var(--fs-small); line-height: 1.4; color: var(--color-text-muted); }
+
+  @media (min-width: 768px) {
+    .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s-6); align-items: start; }
+    .hero__facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1024px) {
+    .hero { grid-template-areas: "photo" "plane" "facts"; }
+    .hero__photo :global(img) { aspect-ratio: auto; height: clamp(240px, calc(100svh - var(--header-h) - 475px), 420px); object-position: 50% 26%; }
+    .hero__plane { padding-block: var(--s-5, 2.5rem) var(--s-3); }
+    .hero__grid { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--s-8); }
+    .hero h1 { max-width: 21ch; font-size: clamp(3rem, 1.6rem + 2.4vw, 4rem); }
+    .hero__facts-wrap { background: var(--color-primary); }
+    .hero__facts { padding: var(--s-3) 0 var(--s-4); gap: 0; border-top: var(--line) solid var(--color-primary-hover); }
+    .hero__facts li { border-left: var(--line) solid var(--color-accent); padding-inline: var(--s-3); }
+    .hero__facts li:first-child { border-left: 0; padding-left: 0; }
+    .hero__facts strong { color: var(--color-on-primary); font-size: 1.5rem; }
+    .hero__facts span { color: var(--color-accent); }
+  }
+
+  /* Effect 1: the team photo opens upward over the plane; text and buttons are never delayed. */
+  @keyframes hero-photo-open { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes hero-photo-fade { from { opacity: 0; } to { opacity: 1; } }
+  .hero__photo :global(img) { animation: hero-photo-fade 400ms var(--ease-out) both; }
+  @media (min-width: 1024px) {
+    .hero__photo :global(img) { animation: hero-photo-open 700ms var(--ease-out) both; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__photo :global(img) { animation: none; }
+  }
+</style>

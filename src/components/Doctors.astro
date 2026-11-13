@@ -1,0 +1,110 @@
+---
+import { Picture } from "astro:assets";
+import FutureLink from "./FutureLink.astro";
+import sabad from "../assets/img/sabad-portrait.jpg";
+import maksymova from "../assets/img/maksymova.jpg";
+import bedei from "../assets/img/bedei.jpg";
+import kurii from "../assets/img/kurii.jpg";
+import { FUTURE_NOTE } from "../data/clinic";
+
+// Photo ↔ name checked against the clinic's current site block «Наша цінність – професіоналізм».
+const team = [
+  { name: "Максимова Марина Євгеніївна", role: "Лікар-стоматолог", years: "22", unit: "роки практики", img: maksymova, pos: "50% 30%" },
+  { name: "Бедей Маріанна Мирославівна", role: "Лікар-стоматолог", years: "11", unit: "років практики", img: bedei, pos: "50% 25%" },
+  { name: "Курій Марія Миронівна", role: "Лікар-стоматолог", years: "10", unit: "років практики", img: kurii, pos: "45% 30%" },
+];
+---
+<section id="doctors" class="doctors section" aria-labelledby="doctors-title">
+  <div class="container">
+    <h2 id="doctors-title" class="doctors__title">Четверо лікарів: 35, 22, 11 і 10 років практики</h2>
+
+    <article class="lead-doc" data-reveal-mask>
+      <figure class="lead-doc__photo">
+        <Picture
+          src={sabad}
+          formats={["avif", "webp"]}
+          widths={[480, 800, 1000]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          quality={60}
+          alt="Сабад Шандор Гейзович, хірург-імплантолог, керівник клініки"
+          loading="lazy"
+        />
+      </figure>
+      <div class="lead-doc__text">
+        <p class="years years--big"><span class="years__mask"><span class="years__num">35</span></span><span class="years__unit">років практики</span></p>
+        <h3 class="name doc-name">Сабад Шандор Гейзович</h3>
+        <p class="doc-role">Керівник клініки, хірург-стоматолог, імплантолог.</p>
+        <p class="lead-doc__fact">Працює імплантами, доступними лише сертифікованим фахівцям International Implant Foundation.</p>
+      </div>
+    </article>
+
+    <ul class="docs">
+      {team.map((d, i) => (
+        <li class="doc" data-reveal-mask style={`--d:${i * 80}ms`}>
+          <figure class="doc__photo">
+            <Picture
+              src={d.img}
+              formats={["avif", "webp"]}
+              widths={[360, 600, 900]}
+              sizes="(min-width: 1024px) 30vw, (min-width: 768px) 33vw, 100vw"
+              quality={60}
+              alt={`${d.name}, лікар-стоматолог`}
+              loading="lazy"
+              style={`object-position:${d.pos}`}
+            />
+          </figure>
+          <p class="years"><span class="years__mask"><span class="years__num">{d.years}</span></span><span class="years__unit">{d.unit}</span></p>
+          <h3 class="name doc-name">{d.name}</h3>
+          <p class="doc-role">{d.role}</p>
+        </li>
+      ))}
+    </ul>
+
+    <p class="doctors__more"><FutureLink note={FUTURE_NOTE}>Усі лікарі та їхня спеціалізація</FutureLink></p>
+  </div>
+</section>
+
+<style>
+  .doctors__title { max-width: 20ch; }
+  .doctors__more { margin-top: var(--s-6); }
+
+  .lead-doc { display: grid; gap: var(--s-3); margin-top: var(--s-6); }
+  .lead-doc__photo, .doc__photo { margin: 0; }
+  .lead-doc__photo :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; }
+  .lead-doc__text { display: grid; gap: var(--s-1); align-content: center; }
+  .lead-doc__fact { margin-top: var(--s-2); padding-left: var(--s-2); border-left: 2px solid var(--color-primary); max-width: 44ch; }
+
+  .years { display: flex; align-items: baseline; gap: var(--s-1); margin: 0; line-height: 1; }
+  .years__mask { display: inline-block; overflow: hidden; padding-top: .06em; }
+  .years__num { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-figure); line-height: .9; color: var(--color-primary); }
+  .years--big .years__num { font-size: clamp(8rem, 5rem + 10vw, 14rem); }
+  .years__unit { font-size: var(--fs-small); font-weight: 650; color: var(--color-text-muted); }
+  .doc-name { font-size: var(--fs-title); line-height: 1.2; }
+  .lead-doc .doc-name { font-size: var(--fs-h3); }
+  .doc-role { color: var(--color-text-muted); max-width: 40ch; }
+
+  .docs { list-style: none; margin: var(--s-8) 0 0; padding: 0; display: grid; gap: var(--s-6); }
+  .doc { display: grid; gap: var(--s-1); align-content: start; }
+  .doc__photo :global(img) { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+  @media (min-width: 768px) { .doc__photo :global(img) { aspect-ratio: 4 / 5; } }
+  /* the figure overlaps the bottom edge of the photo on a white field, away from faces */
+  .doc .years { position: relative; margin-top: calc(var(--fs-figure) * -0.55); padding: var(--s-1) var(--s-2) 0 0; background: var(--color-bg); justify-self: start; }
+
+  @media (min-width: 768px) {
+    .docs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
+  }
+  @media (min-width: 1024px) {
+    .lead-doc { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-8); align-items: center; }
+  }
+
+  /* Effect 3: the years rise out of a mask as each doctor enters the screen (no counting). */
+  :global(.js) [data-reveal-mask]:not(.is-visible) .years__num { transform: translateY(100%); }
+  .years__num { transition: transform 600ms var(--ease-out); transition-delay: var(--d, 0ms); }
+  @media (max-width: 767px) {
+    .years__num { transition-duration: 400ms; transition-delay: 0ms; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .years__num { transition: none; }
+    :global(.js) [data-reveal-mask]:not(.is-visible) .years__num { transform: none; }
+  }
+</style>

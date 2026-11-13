@@ -1,0 +1,126 @@
+---
+import { Picture } from "astro:assets";
+import FutureLink from "./FutureLink.astro";
+import office from "../assets/img/sabad-office.jpg";
+import { FUTURE_NOTE } from "../data/clinic";
+
+const options = [
+  {
+    id: "single",
+    tab: "Один зуб",
+    title: "Одиночний імплант",
+    text: "Відновлює один або кілька зубів без обточування сусідніх здорових зубів.",
+    fit: "До комплекту входять імплант, абатмент, формувач ясен, усі хірургічні етапи та контроль лікування протягом року.",
+  },
+  {
+    id: "all-on-6",
+    tab: "All-on-6",
+    title: "Повне відновлення All-on-6",
+    text: "Шість імплантів надійно фіксують незнімну конструкцію навіть за повної відсутності зубів.",
+    fit: "Хірургічний етап включає підготовку, встановлення імплантів і контроль лікування протягом року.",
+  },
+  {
+    id: "bicortical",
+    tab: "Бікортикальні",
+    title: "Бікортикальні імпланти",
+    text: "Повне відновлення зубного ряду базальними (бікортикальними) імплантами: від 8 до 10 імплантів.",
+    fit: "Метод для повної відсутності зубів; план складаємо на безкоштовній консультації.",
+  },
+] as const;
+---
+<section id="implants" class="implants section" aria-labelledby="implants-title" data-rec="R-005">
+  <div class="implants__grid container">
+    <figure class="implants__photo">
+      <Picture
+        src={office}
+        formats={["avif", "webp"]}
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        quality={60}
+        alt="Сабад Шандор Гейзович за робочим столом у клініці"
+        loading="lazy"
+      />
+      <figcaption><span class="name">Сабад Шандор Гейзович</span> Керівник клініки, хірург-імплантолог</figcaption>
+    </figure>
+
+    <div class="implants__body">
+      <h2 id="implants-title">Імплантація: від одного зуба до всього ряду</h2>
+      <p class="lead">Встановлюємо одиночні імпланти й повністю відновлюємо зубний ряд під будь-який вид протезування.</p>
+
+      <div class="tabs" data-tabs>
+        <div class="tabs__list" role="tablist" aria-label="Варіанти імплантації">
+          {options.map((o, i) => (
+            <button class="tabs__tab" type="button" role="tab" id={`tab-${o.id}`} aria-controls={`panel-${o.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{o.tab}</button>
+          ))}
+          <span class="tabs__indicator" aria-hidden="true"></span>
+        </div>
+        {options.map((o) => (
+          <div class="tabs__panel" role="tabpanel" id={`panel-${o.id}`} aria-labelledby={`tab-${o.id}`} tabindex="0">
+            <h3>{o.title}</h3>
+            <p>{o.text}</p>
+            <p class="tabs__fit">{o.fit}</p>
+            <FutureLink note={FUTURE_NOTE}>Детальніше про метод</FutureLink>
+          </div>
+        ))}
+      </div>
+
+      <ul class="terms" aria-label="Умови імплантації">
+        <li><strong>Один швейцарський виробник.</strong> Працюємо імплантами тільки одного виробника.</li>
+        <li><strong>Лише для сертифікованих фахівців.</strong> Імпланти доступні тим, хто пройшов навчання International Implant Foundation за стандартами Німеччини та Швейцарії.</li>
+        <li><strong>Сертифікати якості.</strong> Імпланти сертифіковані за стандартом DIN EN ISO 13485.</li>
+        <li><strong>Корекції безкоштовно.</strong> Усі наступні етапи та корекції до кінця біологічної інтеграції імпланта.</li>
+      </ul>
+
+      <div class="implants__cta">
+        <a class="btn btn--solid" href="#contacts">Безкоштовна консультація</a>
+        <FutureLink note={FUTURE_NOTE}>Детальніше про імплантацію</FutureLink>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .implants__grid { display: grid; gap: var(--s-6); }
+  .implants__photo { margin: 0; order: 1; }
+  @media (min-width: 1024px) { .implants__photo { order: 0; } }
+  .implants__photo :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 74% 50%; }
+  .implants__photo figcaption { margin-top: var(--s-2); font-size: var(--fs-small); line-height: 1.5; color: var(--color-text-muted); max-width: 36ch; }
+  .implants__photo .name { display: block; font-size: var(--fs-title); color: var(--color-text); }
+  .implants__body { display: grid; gap: var(--s-3); align-content: start; min-width: 0; }
+  .implants__body h2 { max-width: 18ch; }
+
+  .tabs { margin-top: var(--s-2); }
+  .tabs__list { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: var(--line) solid var(--color-border); }
+  .tabs__tab { min-height: 48px; padding: .5rem .25rem; background: none; border: 0; font: inherit; font-weight: 650; font-size: .9375rem; color: var(--color-text-muted); cursor: pointer; border-radius: var(--radius) var(--radius) 0 0; transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out); }
+  .tabs__tab:hover { color: var(--color-text); background: var(--color-surface); }
+  .tabs__tab[aria-selected="true"] { color: var(--color-primary); background: var(--color-accent); }
+  .tabs__indicator { position: absolute; left: 0; bottom: -1px; width: calc(100% / 3); height: 3px; background: var(--color-primary); transform: translateX(calc(var(--tab-index, 0) * 100%)); transition: transform var(--dur-tab) var(--ease-out); }
+  :global(html:not(.js)) .tabs__list { display: none; }
+  .tabs__panel { padding-top: var(--s-3); display: grid; gap: var(--s-1); justify-items: start; outline-offset: 4px; }
+  .tabs__panel + .tabs__panel { margin-top: var(--s-2); }
+  :global(.js) .tabs__panel + .tabs__panel { margin-top: 0; }
+  .tabs__panel h3 { font-size: var(--fs-h3); }
+  .tabs__panel p { max-width: 58ch; }
+  .tabs__fit { color: var(--color-text-muted); }
+  .tabs__panel[hidden] { display: none; }
+  /* Effect 2: the new panel fades in and rises 8px */
+  @keyframes panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .tabs__panel.is-entering { animation: panel-in var(--dur-tab) var(--ease-out) both; }
+
+  .terms { list-style: none; margin: var(--s-2) 0 0; padding: 0; display: grid; gap: var(--s-2); }
+  .terms li { padding-left: var(--s-2); border-left: 2px solid var(--color-primary); max-width: 62ch; color: var(--color-text-muted); }
+  .terms strong { color: var(--color-text); }
+  .implants__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-2); }
+
+  @media (min-width: 768px) {
+    .terms { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); }
+  }
+  @media (min-width: 1024px) {
+    .implants__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-8); align-items: start; }
+    .implants__photo { position: sticky; top: calc(var(--header-h) + var(--s-4)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tabs__indicator { transition: none; }
+    .tabs__panel.is-entering { animation: none; }
+  }
+</style>

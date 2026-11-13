@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import logo from "../assets/img/logo.png";
+import { PHONE_DISPLAY, PHONE_TEL, EMAIL, ADDRESS_FULL, FACEBOOK_URL, INSTAGRAM_URL, FUTURE_NOTE } from "../data/clinic";
+
+const pages = ["Імплантація", "Послуги", "Ціни", "Лікарі", "Контакти", "Політика конфіденційності"];
+---
+<footer class="footer" data-rec="R-009">
+  <div class="footer__inner container">
+    <div class="footer__brand">
+      <a class="footer__logo" href="#top" aria-label="УжДент — на початок сторінки">
+        <Image src={logo} alt="" widths={[160, 320]} sizes="160px" width={160} height={45} loading="lazy" />
+      </a>
+      <p class="footer__muted">Стоматологія для дорослих в Ужгороді.</p>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__h">Контакти</h2>
+      <ul>
+        <li>{ADDRESS_FULL}</li>
+        <li><a href={PHONE_TEL}>{PHONE_DISPLAY}</a></li>
+        <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+        <li class="footer__muted">Пн–Пт 10:00–17:00, за записом</li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__h">Сторінки</h2>
+      <ul class="footer__pages">
+        {pages.map((p) => <li><FutureLink note={FUTURE_NOTE}>{p}</FutureLink></li>)}
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__h">Соцмережі</h2>
+      <ul>
+        <li><a class="footer__social" href={FACEBOOK_URL} target="_blank" rel="noopener"><Icon name="facebook" size={20} /> Facebook</a></li>
+        <li><a class="footer__social" href={INSTAGRAM_URL} target="_blank" rel="noopener"><Icon name="instagram" size={20} /> Instagram</a></li>
+        <li><a class="footer__social" href="https://t.me/UzhDent" target="_blank" rel="noopener"><Icon name="telegram" size={20} /> Telegram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <p>© УжДент, Ужгород</p>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 4px solid var(--color-primary); background: var(--color-bg); padding-top: var(--s-8); font-size: .9375rem; }
+  .footer__inner { display: grid; gap: var(--s-4); grid-template-columns: minmax(0, 1fr); }
+  .footer__logo { display: inline-flex; border-radius: var(--radius); }
+  .footer__logo :global(img) { width: 140px; height: auto; }
+  .footer__brand { display: grid; gap: var(--s-2); align-content: start; }
+  .footer__h { font-family: var(--font-body); font-size: var(--fs-small); font-weight: 700; line-height: 1.4; color: var(--color-text-muted); margin-bottom: var(--s-1); }
+  .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .25rem; }
+  .footer li { min-height: 32px; display: flex; align-items: center; }
+  .footer a { color: var(--color-text); text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; border-radius: var(--radius); transition: color var(--dur-fast) var(--ease-out); }
+  .footer a:hover { color: var(--color-primary); text-decoration: underline; text-underline-offset: .2em; }
+  .footer__muted { color: var(--color-text-muted); }
+  .footer__pages :global(.future-link__note) { left: 0; transform: translate(0, -4px); }
+  .footer__pages :global(.future-link:hover .future-link__note), .footer__pages :global(.future-link:focus-visible .future-link__note) { transform: translate(0, 0); }
+  .footer__bottom { margin-top: var(--s-6); padding-block: var(--s-3); border-top: var(--line) solid var(--color-border); color: var(--color-text-muted); font-size: var(--fs-small); }
+  @media (min-width: 768px) {
+    .footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1024px) {
+    .footer__inner { grid-template-columns: minmax(0, 4fr) repeat(3, minmax(0, 3fr)); gap: var(--s-6); }
+  }
+</style>

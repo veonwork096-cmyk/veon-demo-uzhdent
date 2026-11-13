@@ -1,0 +1,47 @@
+---
+// Real contact channels of the clinic (tel, Viber, WhatsApp, Telegram). The number is always shown as text nearby.
+import Icon from "./Icon.astro";
+import { CHANNELS, MESSENGERS } from "../data/clinic";
+
+interface Props {
+  tone: "on-primary" | "on-light";
+  /** include the phone button as the first, primary action */
+  phone?: boolean;
+  /** "row": phone full width + messengers in a row; "grid": all equal */
+  layout?: "row" | "grid";
+  rec?: string;
+  label?: string;
+}
+const { tone, phone = true, layout = "row", rec, label = "Зв’язатися з клінікою" } = Astro.props;
+const list = phone ? CHANNELS : MESSENGERS;
+---
+<ul class:list={["channels", `channels--${layout}`, `channels--${tone}`]} aria-label={label} data-rec={rec}>
+  {list.map((c) => (
+    <li class:list={["channels__item", c.id === "phone" && "channels__item--phone"]}>
+      <a
+        class:list={["btn", c.id === "phone" ? (tone === "on-primary" ? "btn--light" : "btn--solid") : (tone === "on-primary" ? "btn--ghost-light" : "btn--ghost")]}
+        href={c.href}
+        aria-label={c.aria}
+        data-channel={c.id}
+        {...(c.external ? { target: "_blank", rel: "noopener" } : {})}
+      >
+        <Icon name={c.id} size={20} />
+        <span>{c.label}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .channels { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-1); }
+  .channels--row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .channels--row .channels__item--phone { grid-column: 1 / -1; }
+  .channels--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 768px) {
+    .channels--grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  .channels .btn { width: 100%; }
+  @media (max-width: 420px) {
+    .channels--row .channels__item:not(.channels__item--phone) .btn { padding-inline: .375rem; gap: .375rem; font-size: .875rem; }
+  }
+</style>

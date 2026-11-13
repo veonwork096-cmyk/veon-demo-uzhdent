@@ -1,0 +1,63 @@
+---
+import { Picture } from "astro:assets";
+import FutureLink from "./FutureLink.astro";
+import award from "../assets/img/award-2023.jpg";
+import { FUTURE_NOTE } from "../data/clinic";
+---
+<section id="proof" class="proof section" aria-labelledby="proof-title" data-rec="R-004,R-010">
+  <div class="proof__grid container">
+    <figure class="proof__award">
+      <div class="proof__frame">
+        <Picture
+          src={award}
+          formats={["avif", "webp"]}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 45vw, 100vw"
+          quality={70}
+          alt="Диплом «Експертна оцінка»: Стоматологія УжДент — Стоматологія року у м. Ужгороді, Top Ukrainian Award 2023"
+          loading="lazy"
+        />
+      </div>
+      <figcaption>Top Ukrainian Award 2023 — «Стоматологія року у м. Ужгороді», експертна оцінка «Вибір країни».</figcaption>
+    </figure>
+
+    <div class="proof__body">
+      <h2 id="proof-title">4,7 у Google, диплом 2023 і сертифіковані імпланти</h2>
+      <ul class="claims">
+        <li class="claim" data-rec="R-010">
+          <p class="claim__big">4,7 <span>з 5</span></p>
+          <p class="claim__text"><strong>Оцінка в Google</strong> за 99 відгуками пацієнтів.</p>
+        </li>
+        <li class="claim">
+          <p class="claim__head">Імпланти сертифіковані</p>
+          <p class="claim__text">Стандарт DIN EN ISO 13485, додаток II Директиви 93/42 EWG; дозволені для застосування в Україні.</p>
+        </li>
+        <li class="claim">
+          <p class="claim__head">Гарантія на послуги</p>
+          <p class="claim__text">Згідно з нормативами та вимогами Наказу МОЗ України.</p>
+        </li>
+      </ul>
+      <p><FutureLink note={FUTURE_NOTE}>Гарантії та сертифікати</FutureLink></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof__grid { display: grid; gap: var(--s-6); }
+  .proof__award { margin: 0; }
+  .proof__frame { border: var(--line) solid var(--color-border); padding: var(--s-2); background: var(--color-bg); }
+  .proof__frame :global(img) { width: 100%; height: auto; }
+  .proof__award figcaption { margin-top: var(--s-2); font-size: var(--fs-small); color: var(--color-text-muted); max-width: 52ch; }
+  .proof__body { display: grid; gap: var(--s-4); align-content: start; }
+  .claims { list-style: none; margin: 0; padding: 0; display: grid; }
+  .claim { display: grid; gap: .25rem; padding-block: var(--s-3); border-top: var(--line) solid var(--color-border); }
+  .claim:last-child { border-bottom: var(--line) solid var(--color-border); }
+  .claim__big { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-figure); line-height: .95; color: var(--color-primary); }
+  .claim__big span { margin-left: .2em; font-family: var(--font-body); font-weight: 650; font-size: var(--fs-lead); color: var(--color-text-muted); }
+  .claim__head { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-title); line-height: 1.2; }
+  .claim__text { color: var(--color-text-muted); max-width: 46ch; }
+  .claim__text strong { color: var(--color-text); }
+  @media (min-width: 1024px) {
+    .proof__grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--s-8); align-items: center; }
+  }
+</style>

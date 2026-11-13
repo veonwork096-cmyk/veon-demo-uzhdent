@@ -1,0 +1,30 @@
+---
+// Bottom channel bar on phones: appears after the hero, hides over #contacts (src/scripts/site.ts). Never covers content: body has padding-bottom.
+import Icon from "./Icon.astro";
+import { CHANNELS } from "../data/clinic";
+---
+<nav class="bar" data-bar aria-label="Швидкий зв’язок" data-rec="R-003">
+  <ul>
+    {CHANNELS.map((c) => (
+      <li>
+        <a class:list={["bar__btn", c.id === "phone" && "bar__btn--main"]} href={c.href} aria-label={c.aria} {...(c.external ? { target: "_blank", rel: "noopener" } : {})}>
+          <Icon name={c.id} size={20} />
+          <span>{c.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--color-bg); border-top: var(--line) solid var(--color-border); padding: .375rem .5rem calc(.375rem + env(safe-area-inset-bottom)); transition: transform 250ms var(--ease-out); }
+  :global(.js) .bar.is-ready:not(.is-shown) { transform: translateY(110%); }
+  :global(.menu-open) .bar { transform: translateY(110%); }
+  .bar ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: .375rem; }
+  .bar__btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .125rem; min-height: 52px; border-radius: var(--radius); font-size: .75rem; font-weight: 650; line-height: 1.1; color: var(--color-primary); text-decoration: none; border: 1.5px solid var(--color-border); transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+  .bar__btn:hover { border-color: var(--color-primary); }
+  .bar__btn--main { background: var(--color-primary); color: var(--color-on-primary); border-color: var(--color-primary); }
+  .bar__btn--main:hover { background: var(--color-primary-hover); }
+  @media (min-width: 768px) { .bar { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .bar { transition: none; } }
+</style>

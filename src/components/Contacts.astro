@@ -1,0 +1,59 @@
+---
+import Channels from "./Channels.astro";
+import Icon from "./Icon.astro";
+import { PHONE_DISPLAY, PHONE_TEL, EMAIL, ADDRESS_FULL, MAP_URL } from "../data/clinic";
+---
+<section id="contacts" class="contacts plane section" aria-labelledby="contacts-title" data-rec="R-009">
+  <div class="contacts__grid container">
+    <div class="contacts__main">
+      <h2 id="contacts-title">Безкоштовна консультація — вул. П.&nbsp;Скунця,&nbsp;1</h2>
+      <p class="contacts__lead">Огляд, обстеження, план лікування і розрахунок вартості — безкоштовно. Прийом за записом.</p>
+      <a class="contacts__phone" href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+      <Channels tone="on-primary" layout="grid" label="Записатися через" />
+      <p class="contacts__hint">У вихідні та ввечері напишіть у Viber або Telegram — відповімо в робочий час.</p>
+    </div>
+
+    <dl class="facts">
+      <div class="facts__row">
+        <dt><Icon name="pin" size={20} /> Адреса</dt>
+        <dd>
+          {ADDRESS_FULL}<br />
+          <span class="facts__muted">Історичний центр, біля річки Уж</span><br />
+          <a class="facts__link" href={MAP_URL} target="_blank" rel="noopener">Відкрити на карті</a>
+        </dd>
+      </div>
+      <div class="facts__row">
+        <dt><Icon name="clock" size={20} /> Години</dt>
+        <dd>Пн–Пт 10:00–17:00<br /><span class="facts__muted">Сб, Нд — вихідні</span></dd>
+      </div>
+      <div class="facts__row">
+        <dt><Icon name="mail" size={20} /> Пошта</dt>
+        <dd><a class="facts__link" href={`mailto:${EMAIL}`}>{EMAIL}</a></dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .contacts__grid { display: grid; gap: var(--s-6); }
+  .contacts__main { display: grid; gap: var(--s-3); align-content: start; min-width: 0; }
+  .contacts h2 { color: var(--color-on-primary); max-width: 18ch; text-wrap: balance; }
+  .contacts__lead { font-size: var(--fs-lead); color: var(--color-accent); max-width: 46ch; }
+  .contacts__phone { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem); line-height: 1.05; color: var(--color-on-primary); text-decoration: none; justify-self: start; border-radius: var(--radius); transition: color var(--dur-fast) var(--ease-out); }
+  .contacts__phone:hover { color: var(--color-accent); }
+  .contacts__hint { font-size: .9375rem; color: var(--color-accent); max-width: 52ch; }
+
+  .facts { margin: 0; display: grid; gap: 0; align-content: start; }
+  .facts__row { display: grid; gap: .25rem; padding-block: var(--s-3); border-top: var(--line) solid var(--color-primary-hover); }
+  .facts__row:first-child { border-top: 0; padding-top: 0; }
+  .facts dt { display: flex; align-items: center; gap: .5rem; font-size: var(--fs-small); font-weight: 650; color: var(--color-accent); }
+  .facts dd { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--color-on-primary); }
+  .facts__muted { color: var(--color-accent); }
+  .facts__link { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-on-primary); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; border-radius: var(--radius); transition: text-decoration-thickness var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+  .facts__link:hover { color: var(--color-accent); text-decoration-thickness: 2px; }
+
+  @media (min-width: 1024px) {
+    .contacts__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--s-12); }
+    .facts { padding-top: var(--s-2); }
+  }
+</style>

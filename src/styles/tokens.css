@@ -1,0 +1,65 @@
+/* Hallmark · theme: custom · idea: "Лікують люди з іменами й роками практики; бордовий бренду — суцільними площинами" · vibe: "people-first, warm, exact, brand bordeaux" · paper #FFFFFF · accent #AA1623 · faces Alegreya / Mulish · hero: фото команди на всю ширину над бордовою площиною з H1 і каналами · nav: 5 якорів + Записатися · posture light/roman-serif/warm · surface: absolute */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S (signature lives below the fold), answered by the 35-year line in the hero sentence and the trust row under the photo */
+/* Hallmark · waive 7b · --color-bg #FFFFFF, --color-on-primary #FFFFFF · design/concept.md п.5 Look: white like the walls and coats in the client photos; cream/beige rejected as a Hallmark stamp, the warmth comes from the bordeaux planes */
+/* Hallmark · answer F4 · .btn--solid (on white) and .btn--light (on bordeaux) are one primary recipe in two grounds; never both on one surface. .btn--ghost is outline */
+/* Client design tokens from design/concept.md (veon-concept colors and fonts). Breakpoints: 768px (tablet), 1024px (desktop) — media queries use these values. */
+:root {
+  /* colour roles */
+  --color-bg: #FFFFFF;
+  --color-surface: #F5F0F0;
+  --color-text: #1F1719;
+  --color-text-muted: #5F5457;
+  --color-primary: #AA1623;
+  --color-primary-hover: #8C111C;
+  --color-on-primary: #FFFFFF;
+  --color-accent: #F7DCDF;
+  --color-accent-ink: #8C111C;
+  --color-border: #E6DEDF;
+  --color-focus: #1F1719;
+  --color-tooltip-bg: #1F1719;
+  --color-tooltip-text: #FFFFFF;
+
+  /* type */
+  --font-display: "Alegreya", "Alegreya Fallback", Georgia, serif;
+  --font-body: "Mulish", "Mulish Fallback", system-ui, sans-serif;
+  --fs-display: clamp(2.125rem, 1.35rem + 3.3vw, 4.25rem);
+  --fs-h2: clamp(1.875rem, 1.4rem + 1.9vw, 3rem);
+  --fs-h3: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+  --fs-title: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-figure: clamp(4.5rem, 3rem + 5vw, 7.5rem);
+  --lh-display: 1.08;
+  --lh-body: 1.6;
+
+  /* space: rhythm of 8 */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-6: 3rem;
+  --s-8: 4rem;
+  --s-12: 6rem;
+  --s-16: 8rem;
+  --space: clamp(1.25rem, 0.5rem + 2.5vw, 2.5rem);
+  --section-y: clamp(4rem, 2rem + 6vw, 8rem);
+  --container: 1280px;
+  --gutter: 1.5rem;
+
+  /* shape, chrome */
+  --radius: 4px;
+  --line: 1px;
+  --btn-h: 3.25rem;
+  --header-h: 60px;
+  --bar-h: 64px;
+
+  /* motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 600ms;
+  --dur-fast: 200ms;
+  --dur-tab: 250ms;
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 76px; --btn-h: 3rem; }
+}

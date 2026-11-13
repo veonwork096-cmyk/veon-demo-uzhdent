@@ -1,0 +1,47 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Implants from "../components/Implants.astro";
+import Services from "../components/Services.astro";
+import Doctors from "../components/Doctors.astro";
+import Proof from "../components/Proof.astro";
+import Contacts from "../components/Contacts.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import { EMAIL, FACEBOOK_URL, INSTAGRAM_URL } from "../data/clinic";
+
+const title = "Імплантація зубів в Ужгороді — стоматологія УжДент";
+const description = "Стоматологія для дорослих в Ужгороді, 25 років: імплантація (один зуб, All-on-6, бікортикальні), лікування, протезування. Діагностика безкоштовно.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Dentist",
+  name: "УжДент",
+  alternateName: "UzhDent stomatologiya",
+  telephone: "+380956221802",
+  email: EMAIL,
+  address: { "@type": "PostalAddress", streetAddress: "вул. П. Скунця, 1", addressLocality: "Ужгород", postalCode: "88000", addressCountry: "UA" },
+  geo: { "@type": "GeoCoordinates", latitude: 48.624393, longitude: 22.287174 },
+  openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "17:00" }],
+  sameAs: [FACEBOOK_URL, INSTAGRAM_URL, "https://t.me/UzhDent"],
+  employee: [
+    { "@type": "Person", name: "Сабад Шандор Гейзович", jobTitle: "Керівник, хірург-стоматолог, імплантолог" },
+    { "@type": "Person", name: "Максимова Марина Євгеніївна", jobTitle: "Лікар-стоматолог" },
+    { "@type": "Person", name: "Бедей Маріанна Мирославівна", jobTitle: "Лікар-стоматолог" },
+    { "@type": "Person", name: "Курій Марія Миронівна", jobTitle: "Лікар-стоматолог" },
+  ],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  <Header slot="header" />
+  <Hero />
+  <Implants />
+  <Services />
+  <Doctors />
+  <Proof />
+  <Contacts />
+  <Footer slot="footer" />
+  <MobileBar slot="footer" />
+</Base>

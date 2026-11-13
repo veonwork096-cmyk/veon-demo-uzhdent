@@ -1,0 +1,114 @@
+---
+import { Picture } from "astro:assets";
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import treatment from "../assets/img/treatment.jpg";
+import { FUTURE_NOTE } from "../data/clinic";
+
+interface Service { title: string; gist: string; more?: string; anchor?: string; }
+const services: Service[] = [
+  { title: "Гігієна", gist: "Професійна чистка в кріслі: ультразвук і Air Flow.", more: "Знімаємо зубний камінь ультразвуковим скалером, пігментний наліт апаратом Air Flow, м’який наліт щіточкою і пастою. Потім підбираємо індивідуальні засоби гігієни." },
+  { title: "Знеболення", gist: "Місцева анестезія з мінімальною токсичністю.", more: "Знеболюємо кожне втручання, яке може бути болючим. За потреби можливий анестезіологічний супровід (седація)." },
+  { title: "Пломбування зубів", gist: "Сучасні естетичні фотополімерні матеріали.", more: "Відновлюємо порожнини й дефекти після карієсу. Пломба захищає зуб від інфекції та повертає йому функцію й естетику." },
+  { title: "Лікування коренів", gist: "Перша допомога при гострому болю.", more: "Лікуємо пульпіт і періодонтит, перелікуємо канали після неякісного лікування. Контроль якості — прицільна цифрова рентгенографія." },
+  { title: "Хірургія", gist: "Видалення зубів, абсцеси, кісти, пластика.", more: "Просте і складне видалення, зокрема зубів мудрості; розкриття абсцесів, видалення кіст, пластика вуздечок язика і губи." },
+  { title: "Протезування", gist: "Коронки, мости, бюгельні та знімні протези.", more: "Металокераміка, діоксид цирконію та кераміка E-max за технологією CAD/CAM. Лікар пропонує всі можливі варіанти, ви обираєте оптимальний." },
+  { title: "Імплантологія", gist: "Один зуб, All-on-6, бікортикальні імпланти.", anchor: "#implants" },
+];
+---
+<section id="services" class="services section" aria-labelledby="services-title">
+  <div class="container">
+    <div class="free">
+      <p class="free__title">Діагностика — безкоштовно</p>
+      <p class="free__text">Огляд, обстеження, план лікування і розрахунок вартості.</p>
+      <a class="btn btn--solid free__btn" href="#contacts">Записатися на діагностику</a>
+    </div>
+
+    <div class="services__grid">
+      <figure class="services__photo">
+        <Picture
+          src={treatment}
+          formats={["avif", "webp"]}
+          widths={[400, 700, 1000]}
+          sizes="(min-width: 1024px) 30vw, 100vw"
+          quality={60}
+          alt="Лікарка УжДенту під час прийому пацієнта в кабінеті"
+          loading="lazy"
+        />
+      </figure>
+
+      <div class="services__body">
+        <h2 id="services-title">8 напрямків лікування для дорослих</h2>
+        <p class="lead">Коли виникає проблема, не чекайте: при болю запишемо на прийом у той самий день.</p>
+        <ul class="index">
+          {services.map((s) => (
+            <li class="index__item">
+              {s.anchor ? (
+                <a class="index__row index__link" href={s.anchor}>
+                  <span class="index__head"><span class="index__title">{s.title}</span><span class="index__gist">{s.gist}</span></span>
+                  <span class="index__go">До розділу</span>
+                </a>
+              ) : (
+                <details class="index__details">
+                  <summary class="index__row">
+                    <span class="index__head"><span class="index__title">{s.title}</span><span class="index__gist">{s.gist}</span></span>
+                    <Icon name="chevron" size={22} class="index__chev" />
+                  </summary>
+                  <p class="index__more">{s.more}</p>
+                </details>
+              )}
+            </li>
+          ))}
+        </ul>
+        <p class="services__prices"><FutureLink note={FUTURE_NOTE}>Ціни на послуги</FutureLink></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services { background: var(--color-surface); }
+  .free { display: grid; gap: var(--s-1) var(--s-4); align-items: center; padding: var(--s-3); background: var(--color-accent); border: var(--line) solid var(--color-primary); border-radius: var(--radius); }
+  .free__title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-h3); line-height: 1.1; color: var(--color-accent-ink); }
+  .free__text { color: var(--color-text); }
+  .free__btn { justify-self: start; margin-top: var(--s-1); white-space: nowrap; }
+  @media (min-width: 1024px) {
+    .free { grid-template-columns: auto minmax(0, 1fr) auto; padding: var(--s-3) var(--s-4); }
+    .free__btn { margin-top: 0; }
+  }
+
+  .services__grid { display: grid; gap: var(--s-6); margin-top: var(--s-8); }
+  .services__photo { margin: 0; }
+  .services__photo :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 60% 40%; }
+  .services__body { display: grid; gap: var(--s-2); align-content: start; min-width: 0; }
+
+  .index { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; border-top: var(--line) solid var(--color-border); }
+  @media (min-width: 768px) {
+    .index { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-4); border-top: 0; }
+    .index__item { border-top: var(--line) solid var(--color-border); }
+    .index__item:last-child { grid-column: 1 / -1; }
+  }
+  .index__item { border-bottom: var(--line) solid var(--color-border); }
+  .index__row { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-2); padding: var(--s-2) 0; min-height: 56px; cursor: pointer; list-style: none; color: var(--color-text); text-decoration: none; border-radius: var(--radius); }
+  .index__row::-webkit-details-marker { display: none; }
+  .index__head { display: grid; gap: .125rem; min-width: 0; }
+  .index__title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-title); line-height: 1.2; transition: color var(--dur-fast) var(--ease-out); }
+  .index__gist { font-size: .9375rem; color: var(--color-text-muted); }
+  .index__row:hover .index__title { color: var(--color-primary); }
+  .index__go { flex: none; margin-top: .3rem; font-size: var(--fs-small); font-weight: 650; color: var(--color-primary); text-decoration: underline; text-underline-offset: .2em; }
+  .index__row :global(.index__chev) { flex: none; margin-top: .2rem; color: var(--color-primary); transition: transform var(--dur-fast) var(--ease-out); }
+  /* Effect 4: chevron turns, the text fades in */
+  .index__details[open] :global(.index__chev) { transform: rotate(180deg); }
+  @keyframes more-in { from { opacity: 0; } to { opacity: 1; } }
+  .index__details[open] .index__more { animation: more-in var(--dur-fast) var(--ease-out); }
+  .index__more { padding: 0 0 var(--s-2); font-size: .9375rem; color: var(--color-text-muted); max-width: 52ch; }
+  .services__prices { margin-top: var(--s-2); }
+
+  @media (min-width: 1024px) {
+    .services__grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--s-8); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .index__row :global(.index__chev) { transition: none; }
+    .index__details[open] .index__more { animation: none; }
+  }
+</style>
